@@ -18,7 +18,7 @@ class Player
 		bool isAutomaticPlayer;
 		int playerNumber;
 	public:
-		Player(std::string n, bool a, int n);
+		Player(std::string n, bool a, int num);
 		std::string getName();
 		bool isPlayerAutomatic();
 		int getPlayerNum();

@@ -28,7 +28,7 @@ class Ship
 		bool isShipSunk() const;
 		bool isShipHorizontal() const;
 		void printShip();
-		void recordHit(int hitLocX, int hitLocY);
+		bool recordHit(int hitLocX, int hitLocY);
 };
 
 #endif

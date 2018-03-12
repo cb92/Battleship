@@ -74,12 +74,12 @@ void Ship::printShip()
 	return;
 }
 
-void Ship::recordHit(int hitLocX, int hitLocY)
+bool Ship::recordHit(int hitLocX, int hitLocY)
 {
 	//check to make sure that the hit is located on the ship, return if it is not
 	if ((!isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
 		|| (isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
-		return;
+		return false; //return false because it was not a hit
 	else
 	{
 		if (!isHorizontal) 
@@ -94,5 +94,5 @@ void Ship::recordHit(int hitLocX, int hitLocY)
 		if (shipSquares[i]=='_')
 			isSunk=false;
 
-	return;
+	return true;
 }

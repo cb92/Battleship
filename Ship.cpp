@@ -10,13 +10,16 @@
 
 using std::cout;
 
-Ship::Ship(int size)
+Ship::Ship(int size, int x, int y, bool h)
 {
 	shipSize=size;
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
 		shipSquares[i]='_'; //initialize all ship squares to '_', indicating no hit
+	xpos=x;
+	ypos=y;
 	isSunk=false;
+	isHorizontal=h;
 }
 
 Ship::Ship(const Ship &oldShip)
@@ -25,12 +28,14 @@ Ship::Ship(const Ship &oldShip)
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
 		shipSquares[i]=oldShip.shipSquares[i]; //initialize all ship squares to '_', indicating no hit
-	isSunk=false;
+	xpos=oldShip.getX();
+	ypos=oldShip.getY();
+	isSunk=oldShip.isShipSunk();
+	isHorizontal=oldShip.isShipHorizontal();
 }
 
 Ship::~Ship()
 {
-
 	if (shipSize > 0)
 		delete [] shipSquares;
 }
@@ -41,12 +46,27 @@ int Ship::getSize() const
 	return shipSize;
 }
 
-bool Ship::isShipSunk()
+int Ship::getX() const
+{
+	return xpos;
+}
+
+int Ship::getY() const
+{
+	return ypos;
+}
+
+bool Ship::isShipSunk() const
 {
 	return isSunk;
 }
 
-void Ship::printShip()
+bool Ship::isShipHorizontal() const
+{
+	return isHorizontal;
+}
+
+void Ship::printShip() 
 {
 	for (int i=0; i<shipSize; i++)
 		cout<<shipSquares[i]<<" ";
@@ -54,19 +74,25 @@ void Ship::printShip()
 	return;
 }
 
-void Ship::recordHit(int hitLoc)
+void Ship::recordHit(int hitLocX, int hitLocY)
 {
-	if (hitLoc>=shipSize || hitLoc<0)
+	//check to make sure that the hit is located on the ship, return if it is not
+	if ((isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
+		|| (!isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
 		return;
-	else shipSquares[hitLoc]='X';
+	else
+	{
+		if (isHorizontal) 
+			shipSquares[hitLocX-xpos]='X';
+		else 
+			shipSquares[hitLocY-yPos]='X'
+	}
 
 	//determine whether the ship has been sunk
 	isSunk=true;
-	for (int i=0; i<shipSize; i++)
+	for (int i=0; i<shipSize; i++)//check for any un-hit locations, if one exists, ship is not sunk
 		if (shipSquares[i]=='_')
 			isSunk=false;
 
 	return;
-
-
 }

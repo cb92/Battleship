@@ -14,17 +14,22 @@ class Ship
 	private: 
 		char* shipSquares;
 		int shipSize;
+		int xpos, ypos; //limits of ship
 		bool isSunk;
+		bool isHorizontal;
+
 
 	public:	
-		Ship(int size);//constructor
+		Ship(int size, int x, int y, bool h);//constructor
 		Ship(const Ship &oldShip); //copy constructor
 		~Ship(); //destructor
 		int getSize() const;
-		bool isShipSunk();
+		int getX() const;
+		int getY() const;
+		bool isShipSunk() const;
+		bool isShipHorizontal() const;
 		void printShip();
-		void recordHit(int hitLoc);
-
+		void recordHit(int hitLocX, int hitLocY);
 };
 
 #endif

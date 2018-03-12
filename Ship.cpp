@@ -77,15 +77,15 @@ void Ship::printShip()
 void Ship::recordHit(int hitLocX, int hitLocY)
 {
 	//check to make sure that the hit is located on the ship, return if it is not
-	if ((isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
-		|| (!isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
+	if ((!isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
+		|| (isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
 		return;
 	else
 	{
-		if (isHorizontal) 
+		if (!isHorizontal) 
 			shipSquares[hitLocX-xpos]='X';
 		else 
-			shipSquares[hitLocY-yPos]='X'
+			shipSquares[hitLocY-ypos]='X';
 	}
 
 	//determine whether the ship has been sunk

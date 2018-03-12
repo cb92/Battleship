@@ -5,7 +5,6 @@
 ** Description: header file for the Ship class
 ******************************************************************************/
 
-
 #ifndef SHIP_H
 #define SHIP_H
 

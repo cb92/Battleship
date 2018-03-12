@@ -14,21 +14,21 @@ Ship::Ship(int size)
 {
 	shipSize=size;
 	shipSquares=new char[shipSize];
-	for (int i=0; i<(*shipSquares).length(); i++)
+	for (int i=0; i<shipSize; i++)
 		shipSquares[i]='_'; //initialize all ship squares to '_', indicating no hit
 	isSunk=false;
 }
 
-Ship::Ship(cont Ship &oldShip)
+Ship::Ship(const Ship &oldShip)
 {
 	shipSize=oldShip.getSize();
-	shipSquares=new char[shipSize]
-	for (int i=0; i<(*shipSquares).length(); i++)
+	shipSquares=new char[shipSize];
+	for (int i=0; i<shipSize; i++)
 		shipSquares[i]=oldShip.shipSquares[i]; //initialize all ship squares to '_', indicating no hit
 	isSunk=false;
 }
 
-Ship::~Ship
+Ship::~Ship()
 {
 
 	if (shipSize > 0)
@@ -36,7 +36,7 @@ Ship::~Ship
 }
 
 
-int Ship::getSize()
+int Ship::getSize() const
 {
 	return shipSize;
 }
@@ -46,21 +46,23 @@ bool Ship::isShipSunk()
 	return isSunk;
 }
 
-void printShip()
+void Ship::printShip()
 {
-	for (int i=0; i<(*shipSquares).length(); i++)
+	for (int i=0; i<shipSize; i++)
 		cout<<shipSquares[i]<<" ";
+	cout<<"\n";
 	return;
 }
-void recordHit(int hitLoc)
+
+void Ship::recordHit(int hitLoc)
 {
-	if (hitLoc>=(*shipSquares).length() || hitLoc<0)
+	if (hitLoc>=shipSize || hitLoc<0)
 		return;
 	else shipSquares[hitLoc]='X';
 
 	//determine whether the ship has been sunk
 	isSunk=true;
-	for (int i=0; i<(*shipSquares).length(); i++)
+	for (int i=0; i<shipSize; i++)
 		if (shipSquares[i]=='_')
 			isSunk=false;
 

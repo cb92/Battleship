@@ -20,11 +20,11 @@ class Ship
 		Ship(int size);//constructor
 		Ship(const Ship &oldShip); //copy constructor
 		~Ship(); //destructor
-		int getSize();
+		int getSize() const;
 		bool isShipSunk();
 		void printShip();
 		void recordHit(int hitLoc);
 
 };
 
-#endif;
+#endif

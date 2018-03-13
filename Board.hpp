@@ -7,20 +7,29 @@
 
 
 #include "Ship.hpp"
-#include <vector>
+#include "Constants.hpp"
 
-#ifndef SHIP_H
-#define SHIP_H
+#ifndef BOARD_H
+#define BOARD_H
 
 class Board
 {
 	private:
-		char gameBoard[10][10]
+		char gameBoard[BOARD_DIM][BOARD_DIM];
+		Ship shipVec[NUM_SHIPS];
 
 	public:
-		Board()
-		placeShip(Ship* s);
+		Board();
+		int getNumHits();
+		void printPrivateBoard();
+		void printPublicBoard();
+		bool recordHit(int x, int y);
+		bool placeShip(Ship* s, int x, int y);
 
 };
 
 #endif
+
+
+
+

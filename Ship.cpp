@@ -6,34 +6,35 @@
 ******************************************************************************/
 
 #include "Ship.hpp"
+#include "Constants.hpp"
 #include <iostream>
 
 using std::cout;
 
-Ship::Ship(int size, std::string n, int x=-1, int y=-1, bool h = true)
+Ship::Ship(int size, std::string n)
 {
 	shipSize=size;
+	name = n;
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
 		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', indicating no hit
-	xpos=x;
-	ypos=y;
-	isSunk=false;
-	isHorizontal=h;
-	name = n;
+	xpos=-1; //indicates that the ship has not been placed yet
+	ypos=-1; //indicates that the ship has not been placed yet
+	isSunk=false; //since ship is new, it is not yet sunk
+	isHorizontal=true;
 }
 
 Ship::Ship(const Ship &oldShip)
 {
 	shipSize=oldShip.getSize();
+	name = oldShip.getName();
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
 		shipSquares[i]=oldShip.shipSquares[i]; //initialize all ship squares to '_', indicating no hit
 	xpos=oldShip.getX();
 	ypos=oldShip.getY();
 	isSunk=oldShip.isShipSunk();
-	isHorizontal=oldShip.isShipHorizontal;
-	name = oldShip.getName();
+	isHorizontal=oldShip.isShipHorizontal();
 }
 
 Ship::~Ship()

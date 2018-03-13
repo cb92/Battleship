@@ -22,7 +22,7 @@ class Ship
 
 
 	public:	
-		Ship(int size, bool h, std::string n, int x=-1, int y=-1);//constructor
+		Ship(int size,  std::string n);//constructor
 		Ship(const Ship &oldShip); //copy constructor
 		~Ship(); //destructor
 		int getSize() const;

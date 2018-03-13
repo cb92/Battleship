@@ -10,16 +10,17 @@
 
 using std::cout;
 
-Ship::Ship(int size, int x, int y, bool h)
+Ship::Ship(int size, std::string n, int x=-1, int y=-1, bool h = true)
 {
 	shipSize=size;
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
-		shipSquares[i]='_'; //initialize all ship squares to '_', indicating no hit
+		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', indicating no hit
 	xpos=x;
 	ypos=y;
 	isSunk=false;
 	isHorizontal=h;
+	name = n;
 }
 
 Ship::Ship(const Ship &oldShip)
@@ -31,7 +32,8 @@ Ship::Ship(const Ship &oldShip)
 	xpos=oldShip.getX();
 	ypos=oldShip.getY();
 	isSunk=oldShip.isShipSunk();
-	isHorizontal=oldShip.isShipHorizontal();
+	isHorizontal=oldShip.isShipHorizontal;
+	name = oldShip.getName();
 }
 
 Ship::~Ship()
@@ -66,6 +68,19 @@ bool Ship::isShipHorizontal() const
 	return isHorizontal;
 }
 
+std::string Ship::getName() const
+{
+	return name;
+}
+
+void Ship::setPosition(int x, int y, bool h)
+{
+	xpos=x;
+	ypos=y;
+	isHorizontal=h;
+	return;
+}
+
 void Ship::printShip() 
 {
 	for (int i=0; i<shipSize; i++)
@@ -83,15 +98,15 @@ bool Ship::recordHit(int hitLocX, int hitLocY)
 	else
 	{
 		if (!isHorizontal) 
-			shipSquares[hitLocX-xpos]='X';
+			shipSquares[hitLocX-xpos]=isHIT;
 		else 
-			shipSquares[hitLocY-ypos]='X';
+			shipSquares[hitLocY-ypos]=isHIT;
 	}
 
 	//determine whether the ship has been sunk
 	isSunk=true;
 	for (int i=0; i<shipSize; i++)//check for any un-hit locations, if one exists, ship is not sunk
-		if (shipSquares[i]=='_')
+		if (shipSquares[i]==isSAFESHIP)
 			isSunk=false;
 
 	return true;

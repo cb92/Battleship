@@ -90,15 +90,17 @@ void Ship::printShip()
 	return;
 }
 
+//hitLocX = location on lettered axis, hitLocY = location on numbered axis
+
 bool Ship::recordHit(int hitLocX, int hitLocY)
 {
 	//check to make sure that the hit is located on the ship, return if it is not
-	if ((!isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
-		|| (isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
+	if ((isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
+		|| (!isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
 		return false; //return false because it was not a hit
 	else
 	{
-		if (!isHorizontal) 
+		if (isHorizontal) 
 			shipSquares[hitLocX-xpos]=isHIT;
 		else 
 			shipSquares[hitLocY-ypos]=isHIT;

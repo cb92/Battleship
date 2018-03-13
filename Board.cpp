@@ -30,7 +30,7 @@ int Board::getNumHits()
 //method to print the board that the player cannot see all of 
 void Board::printPrivateBoard()
 {
-	std::cout<<"  A B C D E F G H I J";
+	std::cout<<"  A B C D E F G H I J\n";
 	for (int i=0; i<BOARD_DIM; i++)
 	{
 		std::cout<<i<<" ";
@@ -48,7 +48,7 @@ void Board::printPrivateBoard()
 //method to print the board that the player can see all of
 void Board::printPublicBoard()
 {
-	std::cout<<"  A B C D E F G H I J";
+	std::cout<<"  A B C D E F G H I J\n";
 	for (int i=0; i<BOARD_DIM; i++)
 	{
 		std::cout<<i<<" ";

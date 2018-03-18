@@ -1,4 +1,4 @@
-#include "Board.hpp"
+#include "Game.hpp"
 #include "Player.hpp"
 #include <iostream>
 
@@ -7,7 +7,7 @@ using std::endl;
 
 int main()
 {
-	Ship myShip(5, "Carrier");
+	/*Ship myShip(5, "Carrier");
 	cout<<myShip.getName()<<endl;
 	cout<<myShip.getSize()<<endl;
 	cout<<myShip.getX()<<endl;
@@ -38,15 +38,39 @@ int main()
 	cout<<myShip.isShipSunk()<<endl;
 	cout<<myShip2.isShipSunk()<<endl;
 
-	Board b1;
-	b1.printPrivateBoard();
-	b1.printPublicBoard();	
 
 	Player p1("Christina",false, 1);
 	cout<<p1.getName()<<endl;
 	cout<<p1.isPlayerAutomatic()<<endl;
 	cout<<p1.getPlayerNum()<<endl;
 
+	Board b1;
+	bool test;
+	test=b1.placeShip(0, 1, 1, true);
+	cout<<"Ok placement: "<<test<<"\n";
+	test=b1.placeShip(1, 8, 1, false);
+	cout<<"Ok placement: "<<test<<"\n";
+	test=b1.placeShip(1, 1, 2, true);
+	cout<<"Ok placement: "<<test<<"\n";
+
+	test=b1.recordHit(1, 1);
+	test=b1.recordHit(2, 1);
+	test=b1.recordHit(3, 1);
+	test=b1.recordHit(4, 1);
+	test=b1.recordHit(5, 1);
+	test=b1.recordHit(6, 1);
+	b1.printPublicBoard();
+	b1.printPrivateBoard();
+
+	test=b1.recordHit(2, 2);
+	b1.printPublicBoard();
+	b1.printPrivateBoard();
+
+	cout<<b1.getSpaceValue(1, 1)<<"\n";
+*/
+
+	Game g1;
+	g1.startGame();
 	return 0;
 
 }

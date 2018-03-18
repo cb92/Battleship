@@ -8,6 +8,13 @@
 #include "Player.hpp"
 
 //constructor, takes strings for name, whether the player is automatic, and number
+Player::Player()
+{
+	name="";
+	isAutomaticPlayer = false;
+	playerNumber = 1;
+}
+
 Player::Player(std::string n, bool a, int num)
 {
 	name=n;
@@ -28,4 +35,23 @@ bool Player::isPlayerAutomatic()
 int Player::getPlayerNum()
 {
 	return playerNumber;
+}
+
+
+void Player::setName(std::string n)
+{
+	name=n;
+	return;
+}
+
+void Player::setAuto(bool a)
+{
+	isAutomaticPlayer=a;
+	return;
+}
+
+void Player::setNum(int n)
+{
+	playerNumber=n;
+	return;
 }

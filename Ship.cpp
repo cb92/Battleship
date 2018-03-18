@@ -24,6 +24,20 @@ Ship::Ship(int size, std::string n)
 	isHorizontal=true;
 }
 
+Ship::Ship(int size, std::string n, int x, int y, bool s, bool h)
+{
+	shipSize=size;
+	name = n;
+	shipSquares=new char[shipSize];
+	for (int i=0; i<shipSize; i++)
+		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', indicating no hit
+	xpos=x; //indicates that the ship has not been placed yet
+	ypos=y; //indicates that the ship has not been placed yet
+	isSunk=s; //since ship is new, it is not yet sunk
+	isHorizontal=h;
+}
+
+
 Ship::Ship(const Ship &oldShip)
 {
 	shipSize=oldShip.getSize();

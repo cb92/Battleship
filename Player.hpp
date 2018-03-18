@@ -18,11 +18,14 @@ class Player
 		bool isAutomaticPlayer;
 		int playerNumber;
 	public:
+		Player();
 		Player(std::string n, bool a, int num);
 		std::string getName();
 		bool isPlayerAutomatic();
 		int getPlayerNum();
-
+		void setName(std::string n);
+		void setAuto(bool a);
+		void setNum(int n);
 };
 
 #endif

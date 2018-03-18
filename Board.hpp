@@ -24,8 +24,9 @@ class Board
 		int getNumHits();
 		void printPrivateBoard();
 		void printPublicBoard();
+		char getSpaceValue(int x, int y);
 		bool recordHit(int x, int y);
-		bool placeShip(Ship* s, int x, int y);
+		bool placeShip(int shipNum, int x, int y, bool isHorizontal);
 
 };
 

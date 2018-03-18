@@ -60,3 +60,70 @@ void Board::printPublicBoard()
 	}
 
 }
+
+char Board::getSpaceValue(int x, int y)
+{
+	return gameBoard[y][x];
+}
+
+bool Board::recordHit(int x, int y)
+{
+	for (int i=0; i<NUM_SHIPS; i++)
+	{
+		if (shipVec[i].recordHit(x, y))
+		{
+			gameBoard[y][x]=isHIT; //record the hit on the board
+			//tell the user that they sunk a ship
+			if (shipVec[i].isShipSunk()) 
+				std::cout<<"You sunk the "<<shipVec[i].getName()<<"!\n";
+			return true;
+		}
+	}
+	gameBoard[y][x]=isMISS;
+	return false;
+}
+
+bool Board::placeShip(int shipNum, int x, int y, bool isHorizontal)
+{
+	//if ship has already been placed, return false
+	if (shipVec[shipNum].getX()>=0 && shipVec[shipNum].getY()>=0)
+		return false;
+
+	//loop through the positions required for the ship
+	for (int i=0; i<shipVec[shipNum].getSize(); i++)
+	{
+		//if any of the desired spaces are filled, return false
+		if ((isHorizontal && gameBoard[y][x+i]!=isWATER) || (!isHorizontal && gameBoard[y+i][x]!=isWATER))
+			return false;
+		//if any of the desired spaces are out of bounds, return false
+		if ((isHorizontal && (x+1)>=BOARD_DIM) || (!isHorizontal && (y+1)>=BOARD_DIM))
+			return false;
+	}
+
+	//if the for loop finishes, and all the positions are empty, 
+	//1. place the Ship in the desired position on the board
+	for (int i=0; i<shipVec[shipNum].getSize(); i++)
+	{
+		if (isHorizontal)
+			gameBoard[y][x+i]=isSAFESHIP;
+		else 
+			gameBoard[y+i][x]=isSAFESHIP;
+	}
+
+	//2. set the x/y parameters for the Ship object 
+	shipVec[shipNum].setPosition(x, y, isHorizontal);
+
+	//... and return true
+	return true;
+
+
+		/*std::cout<<"Please enter location [Letter][Number] for your "
+					<<shipVec[shipNum].getName()<<" which is length "
+					<<shipVec[shipNum].getSize()<<": \n";
+		xEntry=std::cin.get();
+		yEntry=std::cin.get();
+		std::cout<<xEntry<<"\n";
+		std::cout<<yEntry<<"\n";
+		std::cout<<"Please enter 0 if the ship is oriented vertically, 1 if it is oriented horizontally:\n";
+		std::cin>>horizEntry;*/
+}

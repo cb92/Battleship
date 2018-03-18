@@ -16,5 +16,8 @@ const char isWATER = 'w';
 const char isSAFESHIP = '_';
 const char isUNKNOWN = '?';
 
+const int LETTER_CHAR_OFFSET=65;
+const int NUMBER_CHAR_OFFSET=48;
+
 
 #endif

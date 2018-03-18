@@ -85,6 +85,10 @@ bool Board::recordHit(int x, int y)
 
 bool Board::placeShip(int shipNum, int x, int y, bool isHorizontal)
 {
+	//if x or y is out of bounds, return false
+	if (x>=BOARD_DIM || y>=BOARD_DIM)
+		return false;
+
 	//if ship has already been placed, return false
 	if (shipVec[shipNum].getX()>=0 && shipVec[shipNum].getY()>=0)
 		return false;
@@ -96,7 +100,7 @@ bool Board::placeShip(int shipNum, int x, int y, bool isHorizontal)
 		if ((isHorizontal && gameBoard[y][x+i]!=isWATER) || (!isHorizontal && gameBoard[y+i][x]!=isWATER))
 			return false;
 		//if any of the desired spaces are out of bounds, return false
-		if ((isHorizontal && (x+1)>=BOARD_DIM) || (!isHorizontal && (y+1)>=BOARD_DIM))
+		if ((isHorizontal && (x+i)>=BOARD_DIM) || (!isHorizontal && (y+i)>=BOARD_DIM))
 			return false;
 	}
 
@@ -115,15 +119,4 @@ bool Board::placeShip(int shipNum, int x, int y, bool isHorizontal)
 
 	//... and return true
 	return true;
-
-
-		/*std::cout<<"Please enter location [Letter][Number] for your "
-					<<shipVec[shipNum].getName()<<" which is length "
-					<<shipVec[shipNum].getSize()<<": \n";
-		xEntry=std::cin.get();
-		yEntry=std::cin.get();
-		std::cout<<xEntry<<"\n";
-		std::cout<<yEntry<<"\n";
-		std::cout<<"Please enter 0 if the ship is oriented vertically, 1 if it is oriented horizontally:\n";
-		std::cin>>horizEntry;*/
 }

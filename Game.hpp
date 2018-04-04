@@ -14,14 +14,14 @@ class Game
 		Player p2;
 		Board p2Board;
 	public:		
-		void startGame();
+		//bool playGame(Player firstPlayer);
+		//void startGame();
 		void initializeBoard(Board b);
 		void initializeBoardAuto(Board b);
 		state gameCondition();
-		void printGameState(Player p);
-		bool playGame(Player firstPlayer);
-		bool getNextMove(Player p);
-		bool getNextMoveAuto(Player p);
+		//void printGameState(Player p);
+		bool makeNextMove(Board b, int x, int y);
+		//bool makeNextMoveAuto(Board b);
 
 
 };

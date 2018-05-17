@@ -7,7 +7,9 @@ using std::endl;
 
 int main()
 {
-	/*Ship myShip(5, "Carrier");
+	/*
+	//TEST ALL METHODS FOR SHIP CLASS 
+	Ship myShip(5, "Carrier");
 	cout<<myShip.getName()<<endl;
 	cout<<myShip.getSize()<<endl;
 	cout<<myShip.getX()<<endl;
@@ -38,12 +40,21 @@ int main()
 	cout<<myShip.isShipSunk()<<endl;
 	cout<<myShip2.isShipSunk()<<endl;
 
-
+	//TEST ALL METHODS FOR PLAYER CLASS
 	Player p1("Christina",false, 1);
 	cout<<p1.getName()<<endl;
 	cout<<p1.isPlayerAutomatic()<<endl;
 	cout<<p1.getPlayerNum()<<endl;
 
+	Player p2;
+	p2.setName("Bob");
+	p2.setAuto(false);
+	p2.setPlayerNum(3);
+	cout<<p2.getName()<<endl;
+	cout<<p2.isPlayerAutomatic()<<endl;
+	cout<<p2.getPlayerNum()<<endl;
+
+	//TEST ALL METHODS FOR BOARD CLASS 
 	Board b1;
 	bool test;
 	test=b1.placeShip(0, 1, 1, true);
@@ -66,11 +77,11 @@ int main()
 	b1.printPublicBoard();
 	b1.printPrivateBoard();
 
-	cout<<b1.getSpaceValue(1, 1)<<"\n";
-*/
+	cout<<b1.getSpaceValue(1, 1)<<"\n";*/
+
 
 	Game g1;
-	g1.startGame();
+	g1.playGame();
 	return 0;
 
 }

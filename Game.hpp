@@ -15,13 +15,13 @@ class Game
 		Board p2Board;
 	public:		
 		//bool playGame(Player firstPlayer);
-		//void startGame();
-		void initializeBoard(Board b);
-		void initializeBoardAuto(Board b);
+		void startGame();
+		void initializeBoard(Board &b);
+		void initializeBoardAuto(Board &b);
 		state gameCondition();
 		//void printGameState(Player p);
-		bool makeNextMove(Board b, int x, int y);
-		//bool makeNextMoveAuto(Board b);
+		void getNextMove(Board &b);
+		void getNextMoveAuto(Board &b);
 
 
 };

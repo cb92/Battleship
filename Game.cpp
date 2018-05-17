@@ -5,7 +5,9 @@
 
 bool playGame(int firstPlayer)
 {
-	//
+	startGame();
+
+	return true;
 
 }
 
@@ -13,24 +15,29 @@ bool playGame(int firstPlayer)
 void Game::startGame()
 {
 	//get information about players
-	
-
+	p1.setPlayerNum(1);
+	p2.setPlayerNum(2);
 
 	//initialize both boards, according to whether the players are automatic
-	if (p1.isPlayerAutomatic()) 
-		initializeBoardAuto(p1Board);
-	else 
-		initializeBoard(p1Board);
+	initializeBoardAuto(p1Board);
+	initializeBoardAuto(p2Board);
+	
+	getNextMove(p1Board);
+	p1Board.printPublicBoard();
 
-	if (p2.isPlayerAutomatic()) 
-		initializeBoardAuto(p2Board);
-	else 
-		initializeBoard(p2Board);
+	getNextMove(p2Board);
+	p2Board.printPublicBoard();
+
+	getNextMove(p1Board);
+	p1Board.printPublicBoard();
+
+	getNextMoveAuto(p2Board);
+	p2Board.printPublicBoard();
 
 	return;
 }
 
-void Game::initializeBoard(Board b)
+void Game::initializeBoard(Board &b)
 {
 	int xEntry, yEntry, horizEntry, attemptCount;
 	for (int i=0; i<NUM_SHIPS; i++)
@@ -66,7 +73,7 @@ void Game::initializeBoard(Board b)
 
 
 
-void Game::initializeBoardAuto(Board b)
+void Game::initializeBoardAuto(Board &b)
 {
 	int xEntry, yEntry, horizEntry;
 	unsigned seed=time(0);
@@ -77,14 +84,9 @@ void Game::initializeBoardAuto(Board b)
 		do
 		{
 			xEntry=rand()%10;
-			std::cout<<xEntry<<std::endl;
 			yEntry=rand()%10;
-			std::cout<<yEntry<<std::endl;
 			horizEntry=rand()%2;
-			std::cout<<horizEntry<<std::endl<<"------\n";
 		} while (!b.placeShip(i, xEntry, yEntry, horizEntry));
-
-		b.printPublicBoard();
 
 	}
 
@@ -112,23 +114,10 @@ state Game::gameCondition()
 }
 
 
-bool makeNextMove(Board b, int x, int y)
+void Game::getNextMove(Board &b)
 {
-	if (b.getSpaceValue(x, y)!=isHIT && b.getSpaceValue(x, y)!=isMISS)
-	{
-		b.recordHit(x, y);
-		return true;
-	}
-	else 
-		return false;
-}
-
-
-/*
-bool playGame()
-{
-	
 	int attemptCount=0;
+	int xEntry, yEntry;
 	bool goodMove=false;
 
 	while (!goodMove)
@@ -141,26 +130,35 @@ bool playGame()
 		yEntry=std::cin.get();	
 		std::cin.ignore();
 
-		if (p.getNumber()==1 
-			&& p2board.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isHIT
-			&& p2board.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isMISS)
+		if (b.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isHIT
+			&& b.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isMISS)
 		{
-			p2Board.recordHit(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET);
+			b.recordHit(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET);
 			goodMove=true;
 		}
-
-		if (p.getNumber()==2
-			&& p1board.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isHIT
-			&& p1board.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isMISS)
-		{
-			p1Board.recordHit(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET);
-			goodMove=true;
-		}
-
 		attemptCount++;
 	} 
 
+	return;
+}
 
 
+void Game::getNextMoveAuto(Board &b)
+{
+	bool goodMove=false;
+	int xEntry, yEntry;
 
+	while (!goodMove)
+	{
+		xEntry=rand()%10;
+		yEntry=rand()%10;
+
+		if (b.getSpaceValue(xEntry, yEntry)!=isHIT
+			&& b.getSpaceValue(xEntry, yEntry)!=isMISS)
+		{
+			b.recordHit(xEntry, yEntry);
+			goodMove=true;
+		}
+	} 
+	return;
 }

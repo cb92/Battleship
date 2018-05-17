@@ -50,7 +50,7 @@ void Player::setAuto(bool a)
 	return;
 }
 
-void Player::setNum(int n)
+void Player::setPlayerNum(int n)
 {
 	playerNumber=n;
 	return;

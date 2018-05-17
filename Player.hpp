@@ -25,7 +25,7 @@ class Player
 		int getPlayerNum();
 		void setName(std::string n);
 		void setAuto(bool a);
-		void setNum(int n);
+		void setPlayerNum(int n);
 };
 
 #endif

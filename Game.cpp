@@ -7,56 +7,64 @@
 
 bool Game::playGame()
 {
-	int firstPlayer, currentPlayer;
+	int firstPlayer, currentPlayer, toPlay;
 	Board * bptr;
 	Player * pptr;
-	startGame();
 
-	std::cout<<"Which player will make the first move (enter 1 or 2)?\n";
-	firstPlayer=getInt(1,2);
-
-	if (firstPlayer==1)
+	toPlay=printMenu();
+	while (toPlay==1)
 	{
-		pptr = &p1; 
-		bptr = &p2Board;
-	}
-	else {
-		pptr = &p2;
-		bptr = &p1Board;
-	}
+		startGame();
 
+		std::cout<<"Which player will make the first move (enter 1 or 2)?\n";
+		firstPlayer=getInt(1,2);
 
-
-
-	while(gameCondition()==UNFINISHED)
-	{
-		if ((*pptr).isPlayerAutomatic())
+		if (firstPlayer==1)
 		{
-			getNextMoveAuto(*(bptr));
-		}
-		else
-		{
-			printGameState(*(pptr));
-			getNextMove(*(bptr));
-			printGameState(*(pptr));
-		}
-
-		if ((*pptr).getPlayerNum()==1)
-		{
-			pptr = &p2; 
-			bptr = &p1Board;
-		}
-		else {
-			pptr = &p1;
+			pptr = &p1; 
 			bptr = &p2Board;
 		}
+		else {
+			pptr = &p2;
+			bptr = &p1Board;
+		}
+
+
+
+
+		while(gameCondition()==UNFINISHED)
+		{
+			if ((*pptr).isPlayerAutomatic())
+			{
+				getNextMoveAuto(*(bptr));
+			}
+			else
+			{
+				printGameState(*(pptr));
+				getNextMove(*(bptr));
+				printGameState(*(pptr));
+			}
+
+			if ((*pptr).getPlayerNum()==1)
+			{
+				pptr = &p2; 
+				bptr = &p1Board;
+			}
+			else {
+				pptr = &p1;
+				bptr = &p2Board;
+			}
+		}
+
+		if (gameCondition()==P1_WIN)
+			std::cout<<p1.getName()<<" wins!!!"<<std::endl;
+		else 
+			std::cout<<p2.getName()<<" wins!!!"<<std::endl;
+
+		toPlay=printMenu();
 	}
 
-	if (gameCondition()==P1_WIN)
-		std::cout<<p1.getName()<<" wins!!!"<<std::endl;
-	else 
-		std::cout<<p2.getName()<<" wins!!!"<<std::endl;
-
+	std::cout<<"I hope you enjoyed the Battleship game. Bye!\n\n";
 	return true;
 
 }
@@ -341,7 +349,6 @@ int Game::getInt(int min, int max)
 		nIter++;
 	}
 
-
 	return retInt;
 }
 
@@ -363,4 +370,12 @@ std::string Game::getSquare()
 	}
 
 	return retString;
+}
+
+
+int Game::printMenu()
+{
+
+	std::cout<<"Welcome to Battleship! Enter 1 or 2 to: \n1. Start a new game.\n2. Quit.\n\n";
+	return getInt(1,2);
 }

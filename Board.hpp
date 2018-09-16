@@ -21,6 +21,8 @@ class Board
 
 	public:
 		Board();
+		Board(const Board &oldBoard);
+		~Board() {return;};
 		int getNumHits();
 		void printPrivateBoard();
 		void printPublicBoard();

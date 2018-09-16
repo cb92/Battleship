@@ -15,6 +15,11 @@ Board::Board()
 		shipVec.push_back(Ship(SHIP_LENGTHS[i], SHIP_NAMES[i]));
 }
 
+Board::Board(const Board &oldBoard)
+{
+	
+}
+
 int Board::getNumHits()
 {
 	int count=0;

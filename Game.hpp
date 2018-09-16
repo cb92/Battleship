@@ -22,7 +22,9 @@ class Game
 		void printGameState(Player p);
 		void getNextMove(Board &b);
 		void getNextMoveAuto(Board &b);
-
+		std::string getString(int maxLen);
+		int getInt(int min, int max);
+		std::string getSquare();
 
 };
 

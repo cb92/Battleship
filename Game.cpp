@@ -13,12 +13,10 @@ bool Game::playGame()
 	startGame();
 
 	std::cout<<"Which player will make the first move (enter 1 or 2)?\n";
-	std::cin>>firstPlayer;
-	std::cin.ignore();
+	firstPlayer=getInt(1,2);
 
 	if (firstPlayer==1)
 	{
-	
 		pptr = &p1; 
 		bptr = &p2Board;
 	}
@@ -74,28 +72,20 @@ void Game::startGame()
 	p2.setPlayerNum(2);
 
 	//get player names
-	std::cout<<"What is player 1's name?\n";
-	std::cin>>nameTemp;
-	std::cin.ignore();
-	p1.setName(nameTemp);
+	std::cout<<"What is player 1's name (please enter a string of <=32 chars)?\n";
+	p1.setName(getString(32));
 	std::cout<<"Welcome, "<<p1.getName()<<"!"<<std::endl;
 
-	std::cout<<"What is player 2's name?\n";
-	std::cin>>nameTemp;
-	std::cin.ignore();
-	p2.setName(nameTemp);
+	std::cout<<"What is player 2's name (please enter a string of <=32 chars)?\n";
+	p2.setName(getString(32));
 	std::cout<<"Welcome, "<<p2.getName()<<"!"<<std::endl;
 
 	//get automatic statuses
 	std::cout<<"What type of player is "<<p1.getName()<<"? (enter 0 for non-auto, 1 for auto)\n";
-	std::cin>>autoTemp;
-	std::cin.ignore();
-	p1.setAuto(autoTemp);
+	p1.setAuto(getInt(0,1));
 
 	std::cout<<"What type of player is "<<p2.getName()<<"? (enter 0 for non-auto, 1 for auto)\n";
-	std::cin>>autoTemp;
-	std::cin.ignore();
-	p2.setAuto(autoTemp);
+	p2.setAuto(getInt(0,1));
 
 
 	//initialize both boards, according to whether the players are automatic
@@ -104,8 +94,7 @@ void Game::startGame()
 	else
 	{
 		std::cout<<p1.getName()<<", how would you like your board to be set? (enter 0 for non-auto, 1 for auto)\n";
-		std::cin>>autoTemp;
-		std::cin.ignore();
+		autoTemp=getInt(0,1);
 		if (autoTemp)
 			initializeBoardAuto(p1Board);
 		else initializeBoard(p1Board);
@@ -117,8 +106,7 @@ void Game::startGame()
 	else
 	{
 		std::cout<<p2.getName()<<", how would you like your board to be set? (enter 0 for non-auto, 1 for auto)\n";
-		std::cin>>autoTemp;
-		std::cin.ignore();
+		autoTemp=getInt(0,1);
 		if (autoTemp)
 			initializeBoardAuto(p2Board);
 		else initializeBoard(p2Board);
@@ -155,6 +143,7 @@ void Game::printGameState(Player p)
 void Game::initializeBoard(Board &b)
 {
 	int xEntry, yEntry, horizEntry, attemptCount;
+	std::string entryTemp;
 	for (int i=0; i<NUM_SHIPS; i++)
 	{
 		attemptCount=0;
@@ -167,13 +156,12 @@ void Game::initializeBoard(Board &b)
 			std::cout<<"Please enter location [Letter][Number] for the top/left of your "
 						<<SHIP_NAMES[i]<<" which is length "
 						<<SHIP_LENGTHS[i]<<": \n";
-			xEntry=std::cin.get();
-			yEntry=std::cin.get();	
-			std::cin.ignore();
+			entryTemp=getSquare();		
+			xEntry=static_cast<int>(entryTemp[0]);
+			yEntry=static_cast<int>(entryTemp[1]);
 
 			std::cout<<"Please enter 0 if the ship is oriented vertically, 1 if it is oriented horizontally:\n";
-			horizEntry=std::cin.get()-NUMBER_CHAR_OFFSET;
-			std::cin.ignore();
+			horizEntry=getInt(0,1);
 
 			attemptCount++;
 		} while (!b.placeShip(i, xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET, horizEntry));
@@ -234,6 +222,7 @@ void Game::getNextMove(Board &b)
 	int attemptCount=0;
 	int xEntry, yEntry;
 	bool goodMove=false;
+	std::string entryTemp;
 
 	while (!goodMove)
 	{
@@ -241,9 +230,9 @@ void Game::getNextMove(Board &b)
 			std::cout<<"That move has already been attempted. Please try again. \n";
 
 		std::cout<<"Please enter location [Letter][Number] of your desired move:\n";
-		xEntry=std::cin.get();
-		yEntry=std::cin.get();	
-		std::cin.ignore();
+		entryTemp=getSquare();		
+		xEntry=static_cast<int>(entryTemp[0]);
+		yEntry=static_cast<int>(entryTemp[1]);
 
 		if (b.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isHIT
 			&& b.getSpaceValue(xEntry-LETTER_CHAR_OFFSET, yEntry-NUMBER_CHAR_OFFSET)!=isMISS)
@@ -276,4 +265,102 @@ void Game::getNextMoveAuto(Board &b)
 		}
 	} 
 	return;
+}
+
+
+
+std::string Game::getString(int maxLen)
+{
+	std::string retString;
+	std::getline(std::cin, retString);
+	while (retString.length()>maxLen)
+	{
+		std::cout<<"String too long! Please enter a string with <="<<maxLen<<" characters:"<<std::endl;
+		std::getline(std::cin, retString);
+	}
+
+	return retString;
+
+}
+
+
+
+int Game::getInt(int min, int max)
+{
+	std::string retString;
+	std::getline(std::cin, retString);
+	bool isGoodInput=false;
+	int nIter=0;
+	char tempChar;
+	bool isNeg=false;
+	int retInt=0;
+
+	while (!isGoodInput)
+	{
+		isGoodInput = true;
+		// get input again if required
+		if (nIter>0)
+		{
+			std::cout<<"Bad input! Please enter an integer between "<<min<<" and "<<max<<"."<<std::endl;
+			std::getline(std::cin, retString);
+		}
+
+		// process the string, char by char, to see if it's a numeric
+		for (int i=0; i<retString.length(); i++)
+		{
+			tempChar = static_cast<char>(retString[i]);
+			if (i==0 & tempChar=='-')
+			{
+				isNeg=true;
+				continue;
+			}
+			else 
+			{
+				if (tempChar>=48 && tempChar<=57)
+				{
+					retInt = retInt*10+(static_cast<int>(tempChar)-48);
+				}
+				else 
+				{
+					isGoodInput = false;
+					break;
+				}
+			}
+		}
+		if (isGoodInput && isNeg)
+			retInt = (-1)*retInt;
+		if (isGoodInput && (retInt<min || retInt>max))
+			isGoodInput = false;
+
+		if (!isGoodInput) 
+		{
+			retInt=0;
+			isNeg=false;
+		}
+			
+		nIter++;
+	}
+
+
+	return retInt;
+}
+
+std::string Game::getSquare()
+{
+	std::string retString;
+	std::getline(std::cin, retString);
+	bool isGoodInput=false;
+
+	while (!isGoodInput)
+	{
+		if (retString.length()==2 && (retString[0]>=65 && retString[0]<=74) && (retString[1]>=48 && retString[1]<=57))
+			isGoodInput=true;
+		else
+		{
+			std::cout<<"Bad input! Please enter location [Letter][Number] of your desired move, with capital letters only:\n";
+			std::getline(std::cin, retString);
+		}
+	}
+
+	return retString;
 }

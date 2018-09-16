@@ -20,6 +20,9 @@ class Player
 	public:
 		Player();
 		Player(std::string n, bool a, int num);
+		Player(const Player &oldPlayer);
+		Player& operator=(const Player &obj);
+		~Player() {return;};
 		std::string getName();
 		bool isPlayerAutomatic();
 		int getPlayerNum();
@@ -29,3 +32,7 @@ class Player
 };
 
 #endif
+
+
+//a copy assignment operator MyClass & operator=(const Myclass &)
+//a move constructor MyClass(MyClass &&)

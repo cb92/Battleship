@@ -22,6 +22,26 @@ Player::Player(std::string n, bool a, int num)
 	playerNumber = num;
 }
 
+Player::Player(const Player &oldPlayer)
+{
+	name=oldPlayer.name;
+	isAutomaticPlayer=oldPlayer.isAutomaticPlayer;
+	playerNumber=oldPlayer.playerNumber;
+
+}
+
+Player& Player::operator=(const Player &obj)
+{
+	if (this != &obj)
+	{
+		name = obj.name;
+		isAutomaticPlayer = obj.isAutomaticPlayer;
+		playerNumber = obj.playerNumber;
+	}
+
+	return *this;
+}
+
 std::string Player::getName()
 {
 	return name;

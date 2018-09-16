@@ -8,44 +8,56 @@
 bool Game::playGame()
 {
 	int firstPlayer, currentPlayer;
+	Board * bptr;
+	Player * pptr;
 	startGame();
 
 	std::cout<<"Which player will make the first move (enter 1 or 2)?\n";
 	std::cin>>firstPlayer;
 	std::cin.ignore();
-	currentPlayer=firstPlayer;
+
+	if (firstPlayer==1)
+	{
+	
+		pptr = &p1; 
+		bptr = &p2Board;
+	}
+	else {
+		pptr = &p2;
+		bptr = &p1Board;
+	}
+
+
+
 
 	while(gameCondition()==UNFINISHED)
 	{
-
-		if (currentPlayer==1)
+		if ((*pptr).isPlayerAutomatic())
 		{
-			if (p1.isPlayerAutomatic())
-				getNextMoveAuto(p2Board);
-			else
-			{
-				printGameState(p1);
-				getNextMove(p2Board);
-				printGameState(p1);
-			}
+			getNextMoveAuto(*(bptr));
 		}
 		else
 		{
-			if (p2.isPlayerAutomatic())
-				getNextMoveAuto(p1Board);
-			else
-			{
-				printGameState(p2);
-				getNextMove(p1Board);
-				printGameState(p2);
-			}
-
+			printGameState(*(pptr));
+			getNextMove(*(bptr));
+			printGameState(*(pptr));
 		}
-		//switch current player
-		if (currentPlayer==1)
-			currentPlayer=2;
-		else currentPlayer=1;
+
+		if ((*pptr).getPlayerNum()==1)
+		{
+			pptr = &p2; 
+			bptr = &p1Board;
+		}
+		else {
+			pptr = &p1;
+			bptr = &p2Board;
+		}
 	}
+
+	if (gameCondition()==P1_WIN)
+		std::cout<<p1.getName()<<" wins!!!"<<std::endl;
+	else 
+		std::cout<<p2.getName()<<" wins!!!"<<std::endl;
 
 	return true;
 
@@ -75,12 +87,12 @@ void Game::startGame()
 	std::cout<<"Welcome, "<<p2.getName()<<"!"<<std::endl;
 
 	//get automatic statuses
-	std::cout<<"What type of player is player 1? (enter 0 for non-auto, 1 for auto)\n";
+	std::cout<<"What type of player is "<<p1.getName()<<"? (enter 0 for non-auto, 1 for auto)\n";
 	std::cin>>autoTemp;
 	std::cin.ignore();
 	p1.setAuto(autoTemp);
 
-	std::cout<<"What type of player is player 2? (enter 0 for non-auto, 1 for auto)\n";
+	std::cout<<"What type of player is "<<p2.getName()<<"? (enter 0 for non-auto, 1 for auto)\n";
 	std::cin>>autoTemp;
 	std::cin.ignore();
 	p2.setAuto(autoTemp);
@@ -89,11 +101,29 @@ void Game::startGame()
 	//initialize both boards, according to whether the players are automatic
 	if (p1.isPlayerAutomatic())
 		initializeBoardAuto(p1Board);
-	else initializeBoard(p1Board);
+	else
+	{
+		std::cout<<p1.getName()<<", how would you like your board to be set? (enter 0 for non-auto, 1 for auto)\n";
+		std::cin>>autoTemp;
+		std::cin.ignore();
+		if (autoTemp)
+			initializeBoardAuto(p1Board);
+		else initializeBoard(p1Board);
+
+	}
 
 	if (p2.isPlayerAutomatic())
 		initializeBoardAuto(p2Board, 1);
-	else initializeBoard(p2Board);
+	else
+	{
+		std::cout<<p2.getName()<<", how would you like your board to be set? (enter 0 for non-auto, 1 for auto)\n";
+		std::cin>>autoTemp;
+		std::cin.ignore();
+		if (autoTemp)
+			initializeBoardAuto(p2Board);
+		else initializeBoard(p2Board);
+
+	}
 
 	return;
 }

@@ -51,6 +51,29 @@ Ship::Ship(const Ship &oldShip)
 	isHorizontal=oldShip.isShipHorizontal();
 }
 
+Ship& Ship::operator=(const Ship &right)
+{
+	if (this!=&right)
+	{
+		shipSize=right.getSize();
+		name = right.getName();
+		xpos=right.getX();
+		ypos=right.getY();
+		isSunk=right.isShipSunk();
+		isHorizontal=right.isShipHorizontal();
+
+		if (shipSize>0)
+			delete [] shipSquares;
+		shipSquares = new char[shipSize];
+		for (int i=0; i<shipSize; i++)
+			shipSquares[i]=right.shipSquares[i]; //initialize all ship squares to '_', indicating no hit
+
+
+	}
+	return *this;
+
+}
+
 Ship::~Ship()
 {
 	if (shipSize > 0)

@@ -17,7 +17,24 @@ Board::Board()
 
 Board::Board(const Board &oldBoard)
 {
-	
+	for (int i=0; i<BOARD_DIM; i++)
+		for (int j=0; j<BOARD_DIM; j++)
+			gameBoard[i][j]=oldBoard.gameBoard[i][j];
+	shipVec = oldBoard.shipVec;
+}
+
+Board& Board::operator=(const Board &right)
+{
+	if (this!=&right)
+	{
+		for (int i=0; i<BOARD_DIM; i++)
+			for (int j=0; j<BOARD_DIM; j++)
+				gameBoard[i][j]=right.gameBoard[i][j];
+		shipVec = right.shipVec;
+	}
+
+	return *this;
+
 }
 
 int Board::getNumHits()

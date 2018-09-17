@@ -22,6 +22,7 @@ class Board
 	public:
 		Board();
 		Board(const Board &oldBoard);
+		Board& operator=(const Board &right);
 		~Board() {return;};
 		int getNumHits();
 		void printPrivateBoard();

@@ -8,7 +8,7 @@ using std::endl;
 
 int main()
 {
-	/*
+	
 	//TEST ALL METHODS FOR SHIP CLASS 
 	Ship myShip(5, "Carrier");
 	cout<<myShip.getName()<<endl;
@@ -26,7 +26,7 @@ int main()
 	cout<<myShip.isShipHorizontal()<<endl;
 	myShip.printShip();
 
-	Ship myShip2=myShip;
+	Ship myShip2=myShip; // test copy constructor
 	myShip2.printShip();
 	myShip2.recordHit(0,0);
 	myShip2.printShip();
@@ -36,10 +36,17 @@ int main()
 	myShip2.printShip();
 	myShip2.recordHit(1, 4);
 	myShip2.printShip();
+	myShip2.recordHit(1, 5);
+	myShip2.printShip();
+	myShip2.recordHit(1, 1);
+	myShip2.printShip();
 	myShip2.recordHit(6, 1);
 	myShip2.printShip();
 	cout<<myShip.isShipSunk()<<endl;
 	cout<<myShip2.isShipSunk()<<endl;
+	myShip = myShip2;
+	cout<<myShip.isShipSunk()<<endl;
+	myShip.printShip();
 
 	//TEST ALL METHODS FOR PLAYER CLASS
 	Player p1("Christina",false, 1);
@@ -47,7 +54,10 @@ int main()
 	cout<<p1.isPlayerAutomatic()<<endl;
 	cout<<p1.getPlayerNum()<<endl;
 
-	Player p2;
+	Player p2 = p1;
+	cout<<p2.getName()<<endl;
+	cout<<p2.isPlayerAutomatic()<<endl;
+	cout<<p2.getPlayerNum()<<endl;
 	p2.setName("Bob");
 	p2.setAuto(false);
 	p2.setPlayerNum(3);
@@ -73,16 +83,22 @@ int main()
 	test=b1.recordHit(6, 1);
 	b1.printPublicBoard();
 	b1.printPrivateBoard();
+	Board b2 = b1;
+	test=b2.recordHit(7, 1);
+	b2.printPublicBoard();
+	b1.printPublicBoard();
+	b1 = b2;
+	b1.printPublicBoard();
 
 	test=b1.recordHit(2, 2);
 	b1.printPublicBoard();
 	b1.printPrivateBoard();
 
-	cout<<b1.getSpaceValue(1, 1)<<"\n";*/
+	cout<<b1.getSpaceValue(1, 1)<<"\n";
 
 
-	Game g1;
-	g1.playGame();
+	//Game g1;
+	//g1.playGame();
 	return 0;
 
 }

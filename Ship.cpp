@@ -11,6 +11,7 @@
 
 using std::cout;
 
+// one constructor initializes a ship if only size and name are spcified
 Ship::Ship(int size, std::string n)
 {
 	shipSize=size;
@@ -24,6 +25,7 @@ Ship::Ship(int size, std::string n)
 	isHorizontal=true;
 }
 
+// ship can also be placed when it is initialized
 Ship::Ship(int size, std::string n, int x, int y, bool s, bool h)
 {
 	shipSize=size;
@@ -31,13 +33,14 @@ Ship::Ship(int size, std::string n, int x, int y, bool s, bool h)
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
 		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', indicating no hit
-	xpos=x; //indicates that the ship has not been placed yet
-	ypos=y; //indicates that the ship has not been placed yet
-	isSunk=s; //since ship is new, it is not yet sunk
+	xpos=x; 
+	ypos=y;
+	isSunk=s; 
 	isHorizontal=h;
 }
 
 
+// copy constructor
 Ship::Ship(const Ship &oldShip)
 {
 	shipSize=oldShip.getSize();
@@ -51,6 +54,7 @@ Ship::Ship(const Ship &oldShip)
 	isHorizontal=oldShip.isShipHorizontal();
 }
 
+// copy assignment operator
 Ship& Ship::operator=(const Ship &right)
 {
 	if (this!=&right)
@@ -62,7 +66,7 @@ Ship& Ship::operator=(const Ship &right)
 		isSunk=right.isShipSunk();
 		isHorizontal=right.isShipHorizontal();
 
-		if (shipSize>0)
+		if (shipSize>0) // delete old memory before allocating memory in correct size
 			delete [] shipSquares;
 		shipSquares = new char[shipSize];
 		for (int i=0; i<shipSize; i++)
@@ -74,13 +78,14 @@ Ship& Ship::operator=(const Ship &right)
 
 }
 
+// destructor deletes dynamically allocated memory
 Ship::~Ship()
 {
 	if (shipSize > 0)
 		delete [] shipSquares;
 }
 
-
+// getter methods
 int Ship::getSize() const
 {
 	return shipSize;
@@ -111,6 +116,7 @@ std::string Ship::getName() const
 	return name;
 }
 
+// set position
 void Ship::setPosition(int x, int y, bool h)
 {
 	xpos=x;
@@ -119,6 +125,7 @@ void Ship::setPosition(int x, int y, bool h)
 	return;
 }
 
+// print ship to console for visualization (only used for debugging)
 void Ship::printShip() 
 {
 	for (int i=0; i<shipSize; i++)
@@ -127,15 +134,16 @@ void Ship::printShip()
 	return;
 }
 
-//hitLocX = location on lettered axis, hitLocY = location on numbered axis
 
+// function to record hit on ship, return false if there is no hit, true if there is a hit
+// Note: hitLocX = location on lettered axis, hitLocY = location on numbered axis
 bool Ship::recordHit(int hitLocX, int hitLocY)
 {
 	//check to make sure that the hit is located on the ship, return if it is not
 	if ((isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
 		|| (!isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
-		return false; //return false because it was not a hit
-	else
+		return false; //return false because it was not a hit, true will be returned otherwise
+	else // if there is a hit, record it on the ship
 	{
 		if (isHorizontal) 
 			shipSquares[hitLocX-xpos]=isHIT;

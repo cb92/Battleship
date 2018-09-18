@@ -32,7 +32,3 @@ class Player
 };
 
 #endif
-
-
-//a copy assignment operator MyClass & operator=(const Myclass &)
-//a move constructor MyClass(MyClass &&)

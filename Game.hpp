@@ -28,5 +28,4 @@ class Game
 		int printMenu();
 };
 
-
 #endif 

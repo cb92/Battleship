@@ -15,7 +15,7 @@ class Ship
 	private: 
 		char* shipSquares;
 		int shipSize;
-		int xpos, ypos; //limits of ship
+		int xpos, ypos; //upper left corner of ship
 		bool isSunk;
 		bool isHorizontal;
 		std::string name;
@@ -25,7 +25,7 @@ class Ship
 		Ship(int size,  std::string n);//default constructor
 		Ship(int size, std::string n, int x, int y, bool s, bool h); //non default constructor
 		Ship(const Ship &oldShip); //copy constructor
-		Ship& operator=(const Ship &right);
+		Ship& operator=(const Ship &right); // copy assignment operator
 		~Ship(); //destructor
 		int getSize() const;
 		int getX() const;

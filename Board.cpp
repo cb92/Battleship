@@ -5,6 +5,7 @@
 #include "Board.hpp"
 #include <iostream>
 
+// default board constructor builds a 2D array filled with water, and fills a vector with the standard ship objects
 Board::Board()
 {
 	for (int i=0; i<BOARD_DIM; i++)
@@ -15,6 +16,7 @@ Board::Board()
 		shipVec.push_back(Ship(SHIP_LENGTHS[i], SHIP_NAMES[i]));
 }
 
+// copy constructor - copies old board square by square
 Board::Board(const Board &oldBoard)
 {
 	for (int i=0; i<BOARD_DIM; i++)
@@ -23,6 +25,7 @@ Board::Board(const Board &oldBoard)
 	shipVec = oldBoard.shipVec;
 }
 
+// copy assignment operator - copies old board square by square
 Board& Board::operator=(const Board &right)
 {
 	if (this!=&right)
@@ -37,6 +40,7 @@ Board& Board::operator=(const Board &right)
 
 }
 
+// return the number of hits on the board at the moment
 int Board::getNumHits()
 {
 	int count=0;
@@ -49,7 +53,7 @@ int Board::getNumHits()
 	return count;
 }
 
-//method to print the board that the player cannot see all of 
+//method to print the private version of the board (player can only see hits/misses) 
 void Board::printPrivateBoard()
 {
 	std::cout<<"  A B C D E F G H I J\n";
@@ -60,14 +64,14 @@ void Board::printPrivateBoard()
 		{
 			if (gameBoard[i][j]==isHIT || gameBoard[i][j]==isMISS)
 				std::cout<<gameBoard[i][j]<<" ";
-			else 
+			else // obfuscate non-hit/miss entries
 				std::cout<<isUNKNOWN<<" ";
 		}	
 		std::cout<<std::endl;
 	}
 }
 
-//method to print the board that the player can see all of
+//method to print the board that the player can see completely (usually, the player's own board)
 void Board::printPublicBoard()
 {
 	std::cout<<"  A B C D E F G H I J\n";
@@ -83,11 +87,15 @@ void Board::printPublicBoard()
 
 }
 
+//return the value of a space
 char Board::getSpaceValue(int x, int y)
 {
 	return gameBoard[y][x];
 }
 
+// record a hit on the board by attempting to record a hit on every ship
+// if a ship is hit, change board position to hit and return true
+// if no ship is hit, change board position to miss and return false
 bool Board::recordHit(int x, int y)
 {
 	for (int i=0; i<NUM_SHIPS; i++)
@@ -105,6 +113,7 @@ bool Board::recordHit(int x, int y)
 	return false;
 }
 
+// function to place ship on board
 bool Board::placeShip(int shipNum, int x, int y, bool isHorizontal)
 {
 	//if x or y is out of bounds, return false

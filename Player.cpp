@@ -7,7 +7,7 @@
 
 #include "Player.hpp"
 
-//constructor, takes strings for name, whether the player is automatic, and number
+//default constructor assigns values when no inputs supplied
 Player::Player()
 {
 	name="";
@@ -15,6 +15,7 @@ Player::Player()
 	playerNumber = 1;
 }
 
+//constructor, takes strings for name, whether the player is automatic, and number
 Player::Player(std::string n, bool a, int num)
 {
 	name=n;
@@ -22,6 +23,7 @@ Player::Player(std::string n, bool a, int num)
 	playerNumber = num;
 }
 
+// copy constructor
 Player::Player(const Player &oldPlayer)
 {
 	name=oldPlayer.name;
@@ -30,6 +32,7 @@ Player::Player(const Player &oldPlayer)
 
 }
 
+//copy assignment operator 
 Player& Player::operator=(const Player &obj)
 {
 	if (this != &obj)
@@ -42,6 +45,7 @@ Player& Player::operator=(const Player &obj)
 	return *this;
 }
 
+//getter functions (name, auto, number)
 std::string Player::getName()
 {
 	return name;
@@ -57,7 +61,7 @@ int Player::getPlayerNum()
 	return playerNumber;
 }
 
-
+//setter functions (name, auto, number)
 void Player::setName(std::string n)
 {
 	name=n;

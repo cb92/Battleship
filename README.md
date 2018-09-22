@@ -13,17 +13,20 @@ The Board class provides the underlying structure with which a game is played. A
 
 
 ### Game
+The Game class includes functions and utilities that protect against bad input and execute the game according to its rules. To play the game, it first runs the startGame function (which gets/sets the player numbers/names/types, and initializes the boards according to player type). The Game class includes two board initialization methods, one for automatic players (or players who choose to set their board automatically) and one for live players. It also has two functions to get the next move, one for automatic players and one for live players. Both functions protect against making moves that have already been made.
+
+The Game class also includes input validation functions for strings (below a max length), integers (in a given range) and square values (which must have a letter and a number).
 
 
+### Menu
+The Menu class is very simple - it contains simple methods that allow a user to play multiple games, or quit when desired. It creates runs a new game every time that the user indicates another game should be played.
 
 
 ## Gameplay instructions
-
-## Remaining MVP requirements
-* Add error protection in Game function for user entries
-* 
+Right now, this game allows two users to play the classic game of Battleship, with a 10x10 board, and five named ships of set lengths. On a player's turn, they are presented with a public version of their board and a private version of their opponent's board, to choose which square they will aim for.
 
 ## Future Work
-If I return to this, and decide to expand, future work may include:
+Future work may include:
 * Build out a set of rules for an auto-player to base intelligent gameplay on
+* Make board a dynamic 2D array, allow for customizable board sizes/sets of ships
 * Add sentinel character to end the game early (right now, it will loop until someone wins)

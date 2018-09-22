@@ -25,7 +25,6 @@ class Game
 		std::string getString(int maxLen);
 		int getInt(int min, int max);
 		std::string getSquare();
-		int printMenu();
 };
 
 #endif 

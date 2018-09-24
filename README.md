@@ -15,11 +15,9 @@ The Board class provides the underlying structure with which a game is played. A
 ### Game
 The Game class includes functions and utilities that protect against bad input and execute the game according to its rules. To play the game, it first runs the startGame function (which gets/sets the player numbers/names/types, and initializes the boards according to player type). The Game class includes two board initialization methods, one for automatic players (or players who choose to set their board automatically) and one for live players. It also has two functions to get the next move, one for automatic players and one for live players. Both functions protect against making moves that have already been made.
 
-The Game class also includes input validation functions for strings (below a max length), integers (in a given range) and square values (which must have a letter and a number).
 
-
-### Menu
-The Menu class is very simple - it contains simple methods that allow a user to play multiple games, or quit when desired. It creates runs a new game every time that the user indicates another game should be played.
+## Utility functions 
+The utility function set includes input validation functions for strings (below a max length), integers (in a given range) and square values (which must have a letter and a number). It also includes a menu function that prints a menu for a user and gets input to determine which actions the program should take. It allows a user to play multiple games, or quit when desired. It creates and runs a new game every time that the user indicates another game should be played.
 
 
 ## Gameplay instructions

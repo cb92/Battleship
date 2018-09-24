@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Player.hpp"
+#include "utils.hpp"
 #include <iostream>
 
 
@@ -96,9 +97,12 @@ int main()
 
 	cout<<b1.getSpaceValue(1, 1)<<"\n";*/
 
+	bool continueGame=true;
 
-	Game g1;
-	g1.playGame(); // play game
+	while (continueGame)
+	{
+		continueGame = printMenu();
+	}
 	return 0;
 
 }

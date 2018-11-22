@@ -17,12 +17,13 @@ class Game
 		bool playGame();
 		void startGame();
 		void initializeBoard(Board &b);
-		void initializeBoardAuto(Board &b, int seedOffset=0);
+		void initializeBoardAuto(Board &b, bool print=true);
 		state gameCondition();
 		void printGameState(Player p);
 		void getNextMove(Board &b);
 		void getNextMoveAuto(Board &b);
 		std::string getSquare();
+		void switchPlayers(std::string playerFrom, std::string playerTo);
 };
 
 #endif 

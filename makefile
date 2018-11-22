@@ -16,7 +16,8 @@ VARNAME = value
 shipTest: testMain.o Game.o Board.o Ship.o Player.o utils.o
 	$(CXX) -o shipTest testMain.o Game.o Board.o Ship.o Player.o utils.o
 
-testMain.o: testMain.cpp Game.hpp Player.hpp Ship.hpp Board.hpp Constants.hpp utils.hpp
+testMain.o: testMain.cpp Game.hpp Player.hpp Ship.hpp Board.hpp Constants.hpp \
+utils.hpp
 	$(CXX) -c testMain.cpp
 
 utils.o:  utils.cpp utils.hpp

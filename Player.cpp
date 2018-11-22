@@ -15,7 +15,7 @@ Player::Player()
 	playerNumber = 1;
 }
 
-//constructor, takes strings for name, whether the player is automatic, and number
+//constructor, takes strings for name, whether the player is automatic, number
 Player::Player(std::string n, bool a, int num)
 {
 	name=n;

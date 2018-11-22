@@ -23,7 +23,7 @@ class Board
 		Board();
 		Board(const Board &oldBoard);
 		Board& operator=(const Board &right);
-		~Board() {return;}; // standard destructor - no dynamically allocated memory
+		~Board() {return;}; // standard destructor - no dynamically memory
 		int getNumHits();
 		void printPrivateBoard();
 		void printPublicBoard();

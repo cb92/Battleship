@@ -23,7 +23,7 @@ class Ship
 
 	public:	
 		Ship(int size,  std::string n);//default constructor
-		Ship(int size, std::string n, int x, int y, bool s, bool h); //non default constructor
+		Ship(int size, std::string n, int x, int y, bool s, bool h); 
 		Ship(const Ship &oldShip); //copy constructor
 		Ship& operator=(const Ship &right); // copy assignment operator
 		~Ship(); //destructor

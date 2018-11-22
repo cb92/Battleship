@@ -9,7 +9,9 @@ using std::endl;
 
 int main()
 {
-	
+	unsigned seed=time(0);
+	srand(seed);
+
 	//TEST ALL METHODS FOR SHIP CLASS 
 	/*Ship myShip(5, "Carrier");
 	cout<<myShip.getName()<<endl;

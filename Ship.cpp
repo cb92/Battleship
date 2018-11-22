@@ -18,7 +18,7 @@ Ship::Ship(int size, std::string n)
 	name = n;
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
-		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', indicating no hit
+		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', no hit
 	xpos=-1; //indicates that the ship has not been placed yet
 	ypos=-1; //indicates that the ship has not been placed yet
 	isSunk=false; //since ship is new, it is not yet sunk
@@ -32,7 +32,7 @@ Ship::Ship(int size, std::string n, int x, int y, bool s, bool h)
 	name = n;
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
-		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', indicating no hit
+		shipSquares[i]=isSAFESHIP; //initialize all ship squares to '_', no hit
 	xpos=x; 
 	ypos=y;
 	isSunk=s; 
@@ -47,7 +47,7 @@ Ship::Ship(const Ship &oldShip)
 	name = oldShip.getName();
 	shipSquares=new char[shipSize];
 	for (int i=0; i<shipSize; i++)
-		shipSquares[i]=oldShip.shipSquares[i]; //initialize all ship squares to '_', indicating no hit
+		shipSquares[i]=oldShip.shipSquares[i]; 
 	xpos=oldShip.getX();
 	ypos=oldShip.getY();
 	isSunk=oldShip.isShipSunk();
@@ -66,11 +66,11 @@ Ship& Ship::operator=(const Ship &right)
 		isSunk=right.isShipSunk();
 		isHorizontal=right.isShipHorizontal();
 
-		if (shipSize>0) // delete old memory before allocating memory in correct size
+		if (shipSize>0) // delete old memory before new memory
 			delete [] shipSquares;
 		shipSquares = new char[shipSize];
 		for (int i=0; i<shipSize; i++)
-			shipSquares[i]=right.shipSquares[i]; //initialize all ship squares to '_', indicating no hit
+			shipSquares[i]=right.shipSquares[i]; 
 
 
 	}
@@ -135,14 +135,16 @@ void Ship::printShip()
 }
 
 
-// function to record hit on ship, return false if there is no hit, true if there is a hit
-// Note: hitLocX = location on lettered axis, hitLocY = location on numbered axis
+// function to record hit on ship, return false if no hit, true if hit
+// Note: hitLocX = loc on lettered axis, hitLocY = loc on numbered axis
 bool Ship::recordHit(int hitLocX, int hitLocY)
 {
-	//check to make sure that the hit is located on the ship, return if it is not
-	if ((isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize || hitLocY!=ypos))
-		|| (!isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize || hitLocX!=xpos)))
-		return false; //return false because it was not a hit, true will be returned otherwise
+	//check to make sure that the hit is located on the ship, return if not
+	if ((isHorizontal & (hitLocX<xpos || hitLocX>=xpos+shipSize 
+														|| hitLocY!=ypos))
+		|| (!isHorizontal & (hitLocY<ypos || hitLocY>=ypos+shipSize 
+														|| hitLocX!=xpos)))
+		return false; //return false because it was not a hit
 	else // if there is a hit, record it on the ship
 	{
 		if (isHorizontal) 
@@ -153,7 +155,7 @@ bool Ship::recordHit(int hitLocX, int hitLocY)
 
 	//determine whether the ship has been sunk
 	isSunk=true;
-	for (int i=0; i<shipSize; i++)//check for any un-hit locations, if one exists, ship is not sunk
+	for (int i=0; i<shipSize; i++)
 		if (shipSquares[i]==isSAFESHIP)
 			isSunk=false;
 

@@ -1,11 +1,8 @@
-
-
-
-
 #include "Board.hpp"
 #include <iostream>
 
-// default board constructor builds a 2D array filled with water, and fills a vector with the standard ship objects
+// default board constructor builds a 2D array filled with water, 
+// and fills a vector with the standard ship objects
 Board::Board()
 {
 	for (int i=0; i<BOARD_DIM; i++)
@@ -53,7 +50,8 @@ int Board::getNumHits()
 	return count;
 }
 
-//method to print the private version of the board (player can only see hits/misses) 
+// method to print the private version of the board 
+// (player can only see hits/misses) 
 void Board::printPrivateBoard()
 {
 	std::cout<<"  A B C D E F G H I J\n";
@@ -71,7 +69,8 @@ void Board::printPrivateBoard()
 	}
 }
 
-//method to print the board that the player can see completely (usually, the player's own board)
+// method to print the board that the player can see completely 
+// (usually, the player's own board)
 void Board::printPublicBoard()
 {
 	std::cout<<"  A B C D E F G H I J\n";
@@ -128,10 +127,12 @@ bool Board::placeShip(int shipNum, int x, int y, bool isHorizontal)
 	for (int i=0; i<shipVec[shipNum].getSize(); i++)
 	{
 		//if any of the desired spaces are filled, return false
-		if ((isHorizontal && gameBoard[y][x+i]!=isWATER) || (!isHorizontal && gameBoard[y+i][x]!=isWATER))
+		if ((isHorizontal && gameBoard[y][x+i]!=isWATER) || 
+							(!isHorizontal && gameBoard[y+i][x]!=isWATER))
 			return false;
 		//if any of the desired spaces are out of bounds, return false
-		if ((isHorizontal && (x+i)>=BOARD_DIM) || (!isHorizontal && (y+i)>=BOARD_DIM))
+		if ((isHorizontal && (x+i)>=BOARD_DIM) || 
+							(!isHorizontal && (y+i)>=BOARD_DIM))
 			return false;
 	}
 

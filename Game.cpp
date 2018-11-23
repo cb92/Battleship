@@ -5,7 +5,7 @@
 #include <ctime>
 
 
-
+// function to play game
 bool Game::playGame()
 {
 	int firstPlayer, currentPlayer, toPlay;
@@ -17,6 +17,8 @@ bool Game::playGame()
 	std::cout<<"Which player will make the first move (enter 1 or 2)?\n";
 	firstPlayer=getInt(1,2);
 
+
+	// hold pointers for current player/board objects
 	if (firstPlayer==1)
 	{
 		pptr = &p1; 
@@ -40,6 +42,7 @@ bool Game::playGame()
 			printGameState(*(pptr));
 		}
 
+		// switch pointers at the end of each turn
 		if ((*pptr).getPlayerNum()==1)
 		{
 			if (!p1.isPlayerAutomatic() && !p2.isPlayerAutomatic()) 
@@ -69,7 +72,7 @@ bool Game::playGame()
 
 }
 
-
+// function to perform necessary setup before game is played
 void Game::startGame()
 {
 	std::string nameTemp;
@@ -112,6 +115,7 @@ void Game::startGame()
 
 	}
 
+	// if both players are non-auto, clear screen appropriately between fills
 	if (!p2.isPlayerAutomatic() && !p1.isPlayerAutomatic())
 	{
 		switchPlayers(p1.getName(), p2.getName());
@@ -138,6 +142,8 @@ void Game::startGame()
 	return;
 }
 
+// prints game state, with player's own board exposed and opponent's board
+// mostly obscured, save for moves player has made
 void Game::printGameState(Player p)
 {
 	std::cout<<p.getName()<<"'s GAME STATE:\n\n";
@@ -162,6 +168,7 @@ void Game::printGameState(Player p)
 	return;
 }
 
+// initializes board based on user input 
 void Game::initializeBoard(Board &b)
 {
 	int xEntry, yEntry, horizEntry, attemptCount;
@@ -169,7 +176,7 @@ void Game::initializeBoard(Board &b)
 	for (int i=0; i<NUM_SHIPS; i++)
 	{
 		attemptCount=0;
-		do
+		do // check for valid placement of each ship
 		{
 			b.printPublicBoard();
 			if (attemptCount>0) 
@@ -199,14 +206,14 @@ void Game::initializeBoard(Board &b)
 }
 
 
-
+// initializes a board with random placement of ships on a board 
 void Game::initializeBoardAuto(Board &b, bool print)
 {
 	int xEntry, yEntry, horizEntry;
 
 	for (int i=0; i<NUM_SHIPS; i++)
 	{
-		do
+		do // randomize position placements and place ships if possible
 		{
 			xEntry=rand()%10;
 			yEntry=rand()%10;
@@ -225,7 +232,7 @@ void Game::initializeBoardAuto(Board &b, bool print)
 	return;
 }
 
-
+// returns enum determining state of game
 state Game::gameCondition()
 {
 	if (p1Board.getNumHits()==TOTAL_SHIP_SPACES)
@@ -236,12 +243,10 @@ state Game::gameCondition()
 
 	else
 		return UNFINISHED;
-
-
-
 }
 
 
+// function to prompt a player to actively choose which move to make 
 void Game::getNextMove(Board &b)
 {
 	int attemptCount=0;
@@ -274,6 +279,7 @@ void Game::getNextMove(Board &b)
 }
 
 
+// function to make a random move
 void Game::getNextMoveAuto(Board &b)
 {
 	bool goodMove=false;
@@ -281,6 +287,7 @@ void Game::getNextMoveAuto(Board &b)
 
 	while (!goodMove)
 	{
+		// randomly choose next move
 		xEntry=rand()%10;
 		yEntry=rand()%10;
 
@@ -294,6 +301,7 @@ void Game::getNextMoveAuto(Board &b)
 	return;
 }
 
+// input validation for square
 std::string Game::getSquare()
 {
 	std::string retString;
@@ -302,6 +310,7 @@ std::string Game::getSquare()
 
 	while (!isGoodInput)
 	{
+		// check for two character entries of letter/number
 		if (retString.length()==2 && (retString[0]>=65 && retString[0]<=74) 
 						&& (retString[1]>=48 && retString[1]<=57))
 			isGoodInput=true;
@@ -316,6 +325,10 @@ std::string Game::getSquare()
 	return retString;
 }
 
+
+// switchPlayers is a function that controls the screen between turns, 
+// ensuring that the player whose turn it is can control what is visible
+// on the screen in case someone else is peeking
 void Game::switchPlayers(std::string playerFrom, std::string playerTo)
 {
 	std::cout<<playerFrom<<", press ENTER to finish your turn!";
